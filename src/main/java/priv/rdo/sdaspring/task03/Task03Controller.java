@@ -12,6 +12,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 
 import static org.springframework.http.HttpStatus.ACCEPTED;
+import static org.springframework.http.HttpStatus.BAD_GATEWAY;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -37,5 +38,21 @@ public class Task03Controller {
                 .status(CREATED)
                 .header("Last-Modified", LocalDateTime.now().toString())
                 .body(animal);
+    }
+
+    @PostMapping(value = "task03_bonus")
+    public ResponseEntity<Animal> task03_bonus(@RequestBody Animal animal) {
+        System.out.println(animal);
+        if (animal.getAge() >= 5 ){
+            return ResponseEntity
+                    .status(CREATED)
+                    .header("Last-Modified", LocalDateTime.now().toString())
+                    .body(animal);
+        } else {
+            return ResponseEntity
+                    .status(BAD_GATEWAY)
+                    .header("Last-Modified", LocalDateTime.now().toString())
+                    .body(animal);
+        }
     }
 }
